@@ -115,6 +115,42 @@ class Matrix {
     return result;
   }
 
+  static mergeMatrix(a, b)
+  {
+    let result=new Matrix(a.rows, b.cols);
+    for(let i=0; i<a.rows; i++)
+        {
+            for(let j=0; j<a.columns; j++)
+            {
+                // if(j<a.columns/2)
+                // {
+                //     result.data[i][j]=a.data[i][j];
+                // }
+
+               
+
+                    result.data[i][j]=(a.data[i][j]);
+                
+            }
+        }
+
+     return result;
+  }
+
+  randomSelect(){
+    // let i=Math.floor(random(0, this.rows));
+    // let j=Math.floor(random(0, this.cols));
+    for(let i=0; i<this.rows; i++)
+    {
+      for(let j=0; j<this.cols; j++)
+      {
+        this.data[i][j]=(this.data[i][j]+random()*0.2-0.1)/1;    
+      }
+    }
+    
+
+  }
+
   print() {
     console.table(this.data);
   }

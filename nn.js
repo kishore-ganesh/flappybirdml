@@ -18,10 +18,12 @@ class NeuralNetwork{
         this.bias_o=new Matrix(this.output_nodes, 1);
         this.bias_h.randomize(2, 1);
         this.bias_o.randomize(2, 1);
+        //this.weights_ih.print();
          
     }
 
-    
+    //relu
+    //multiple layers
 
     feedforward(input_array)
     {
@@ -49,6 +51,34 @@ class NeuralNetwork{
        targets=Matrix.fromArray(targets);
        let result=Matrix.subtract(targets, outputs);
     }
+
+
+    inheritFrom(firstParent, secondParent)
+    {
+        this.weights_ih=Matrix.mergeMatrix(firstParent.weights_ih, secondParent.weights_ih);
+        this.weights_ho=Matrix.mergeMatrix(firstParent.weights_ho, secondParent.weights_ho);
+        this.bias_o=Matrix.mergeMatrix(firstParent.bias_o, secondParent.bias_o);
+        this.bias_h=Matrix.mergeMatrix(firstParent.bias_h, secondParent.bias_h);
+    }
+
+
+    mutate(probability){
+
+        let actual=random(0,1);
+        if(actual<=probability)
+        {
+            console.log("MUTATING");
+            this.weights_ih.randomSelect();
+            this.weights_ho.randomSelect();
+            this.bias_o.randomSelect();
+            this.bias_h.randomSelect();
+        }
+
+    }
+
+    //normalize inputs
+
+    
 
     
 
