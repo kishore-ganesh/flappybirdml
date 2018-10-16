@@ -28,6 +28,7 @@ class NeuralNetwork{
     feedforward(input_array)
     {
         let inputs = Matrix.fromArray(input_array);
+        inputs.print();
         let hidden=Matrix.multiply(this.weights_ih, inputs);
        // this.weights_ho.print();
         hidden.add(this.bias_h);
@@ -67,7 +68,7 @@ class NeuralNetwork{
         let actual=random(0,1);
         if(actual<=probability)
         {
-            console.log("MUTATING");
+            // console.log("MUTATING");
             this.weights_ih.randomSelect();
             this.weights_ho.randomSelect();
             this.bias_o.randomSelect();

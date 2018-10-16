@@ -69,7 +69,7 @@ class Matrix {
     let result = new Matrix(this.cols, this.rows);
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
-        result[j][i] += this.data[i][j];
+        result[j][i] = this.data[i][j];
       }
     }
 
@@ -86,7 +86,7 @@ class Matrix {
 
   static fromArray(inp) {
     let results = new Matrix(inp.length, 1);
-    for (let i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.rows; i++) {
       results.data[i][0] = inp[i];
     }
 
@@ -129,7 +129,7 @@ class Matrix {
 
                
 
-                    result.data[i][j]=(a.data[i][j]);
+                    result.data[i][j]=(a.data[i][j]+b[i][j])/2;
                 
             }
         }
@@ -144,7 +144,7 @@ class Matrix {
     {
       for(let j=0; j<this.cols; j++)
       {
-        this.data[i][j]=(this.data[i][j]+random()*0.2-0.1)/1;    
+        this.data[i][j]=(this.data[i][j]+random()*0.2-0.1);    
       }
     }
     

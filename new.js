@@ -4,11 +4,11 @@ function setup() {
   slider1.position();
   //bird = new Bird();
   birds = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10; i++) {
     birds.push(new Bird(300));
   }
   height = 600;
-  gap = 150;
+  gap = 300;
   walllist = [];
 
   for (let i = 0; i < 10; i++) {
@@ -27,8 +27,8 @@ function addToWallList(offset) {
 
 function draw() {
   background(0);
-  //frameRate(10);
-  frameRate(60);
+  frameRate(10);
+  //frameRate(60);
   noStroke();
   fill(255);
   // text(bird.score, 100, 100);
@@ -39,7 +39,8 @@ function draw() {
     inputs = [
       (birds[i].y-closest.bottom.y + 150) / height,
       (closest.bottom.y-birds[i].y) / height,
-      (closest.top.x - birds[i].x) / 600,
+      (closest.top.x) / 600,
+      (birds[i].x)/600
     ];
     if (!birds[i].hasCollided) {
       birds[i].time++;
@@ -51,9 +52,9 @@ function draw() {
       //help best bird
       //console.log(output[0]);
       // console.log(closest.top.x-birds[0].x);
-      if (output[0] > output[1]) {
+      if (output[0] > 0.5) {
         birds[i].up();
-        birds[i].jumps++;
+        birds[i].jumps++; 
       }
 
       birds[i].update();
@@ -106,12 +107,13 @@ function draw() {
     // console.log(birds[0].time+" "+birds[birds.length-1].time);
 
     birds.sort((a, b) => {
-      return a.time - b.time;
+      return a.jumps - b.jumps;
     });
+
     bestBird = birds[birds.length - 1];
-    //   birds.sort((a, b)=>{
-    // 	return a.time-b.time;
-    //   })
+      // birds.sort((a, b)=>{
+    	// return a.time-b.time;
+      // }
     secondBestBird = birds[birds.length - 2];
     let length = birds.length;
     birds = [];
@@ -119,6 +121,7 @@ function draw() {
     for (let i = 0; i < length; i++) {
       createdBird = new Bird();
       createdBird.brain.inheritFrom(bestBird.brain, secondBestBird.brain);
+      
       createdBird.brain.mutate(0.2);
       birds.push(createdBird);
     }
@@ -162,7 +165,7 @@ function Bird(y) {
   this.velox = 0;
   this.lift = -15;
   this.score = 0;
-  this.brain = new NeuralNetwork(3, 1, 2);
+  this.brain = new NeuralNetwork(4, 1, 1);
   this.hasCollided = false;
   this.time = 0;
   this.jumps = 0;
@@ -211,7 +214,7 @@ function Wall(x, y, width, height) {
   this.y = y;
   this.height = height;
   this.width = width;
-  this.velocity = -100;
+  this.velocity = -1;
 
   this.update = function() {
     this.x += this.velocity;
