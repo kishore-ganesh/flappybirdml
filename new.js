@@ -1,6 +1,13 @@
+var globalBestBird;
+var globalSecondBestBird;
 function setup() {
   createCanvas(800, 600);
   slider1 = createSlider(-100, -1);
+  inputBox=createInput();
+  saveButton=createButton("Save generation");
+  loadButton=createButton("Load generation");
+  saveButton.mousePressed(saveGeneration);
+  loadButton.mousePressed(loadGeneration);
   slider1.position();
   //bird = new Bird();
   birds = [];
@@ -24,6 +31,23 @@ function addToWallList(offset) {
     top: new Wall(wallgap + offset, 0, 50, z),
     bottom: new Wall(wallgap + offset, height - bottomheight, 50, bottomheight)
   });
+}
+
+
+function loadGeneration(){
+  let bestBird=new Bird();
+  let secondBestBird=new Bird();
+  bestBird.brain.get(inputBox.value);
+  secondBestBird.brain.get(inputBox.value+"2");
+  birds=[];
+  birds.push(bestBird);
+  birds.push(secondBestBird)
+  redraw();
+}
+
+function saveGeneration(){
+  globalBestBird.brain.dump(inputBox.value);
+  globalSecondBestBird.brain.dump(inputBox.value+"2");
 }
 
 function draw() {
@@ -119,17 +143,45 @@ function draw() {
     });
 
     bestBird = birds[birds.length - 1];
+
     // birds.sort((a, b)=>{
     // return a.time-b.time;
     // });
     secondBestBird = birds[birds.length - 2];
-    let length = birds.length;
+    if(globalBestBird==undefined)
+    {
+      globalBestBird=bestBird;
+      globalSecondBestBird=secondBestBird;
+    }
+
+    else{
+
+      if(globalBestBird.time>bestBird.time)
+      {
+        bestBird=globalBestBird;
+      }
+
+      else{
+        globalBestBird=bestBird;
+      }
+
+      if(globalSecondBestBird.time>secondBestBird.time)
+      {
+        secondBestBird=globalSecondBestBird;
+      }
+
+      else{
+        globalSecondBestBird=secondBestBird;
+      }
+    }
+    
+    let length = 100;
     birds = [];
 
     for (let i = 0; i < length; i++) {
       createdBird = new Bird(closest.bottom.y - 150);
       createdBird.brain.inheritFrom(bestBird.brain, secondBestBird.brain);
-      createdBird.brain.mutate(0.4);
+      createdBird.brain.mutate(1);
       birds.push(createdBird);
     }
 

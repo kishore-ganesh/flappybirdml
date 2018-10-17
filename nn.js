@@ -54,6 +54,8 @@ class NeuralNetwork {
     );
     this.bias_o = Matrix.mergeMatrix(firstParent.bias_o, secondParent.bias_o);
     this.bias_h = Matrix.mergeMatrix(firstParent.bias_h, secondParent.bias_h);
+
+    //back propagationi, if hit b top, drop
   }
 
   mutate(probability) {
@@ -74,6 +76,22 @@ class NeuralNetwork {
       this.bias_o.randomSelect();
       this.bias_h.randomSelect();
     }
+  }
+
+
+  dump(key)
+  {
+      window.localStorage.setItem(key, JSON.stringify(this));
+  }
+
+  get(key)
+  {
+      let loaded=window.localStorage.getItem(key);
+      loaded=JSON.parse(loaded);
+      this.weights_ih=loaded.weights_ih;
+      this.weights_ho=loaded.weights_ho;
+      this.bias_h=loaded.bias_h;
+      this.bias_o=loaded.bias_o;
   }
 
   //normalize inputs
