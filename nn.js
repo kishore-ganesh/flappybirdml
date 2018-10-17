@@ -59,39 +59,32 @@ class NeuralNetwork {
   }
 
   mutate(probability) {
-    let actual = random(0, 1);
     //console.log(actual);
     //this.weights_ih.print();
-    if (actual <= probability) {
-      // console.log("MUTATING");
+
+    // console.log("MUTATING");
 
     //    console.log(this.weights_ih.data[0][0])
-      //this.weights_ih.print();
+    //this.weights_ih.print();
     //    console.log("AFTER");
-      this.weights_ih.randomSelect();
-    //    console.log(this.weights_ih.data[0][0])
-      //  this.weights_ih.print();
-    //    console.log("AFF");
-      this.weights_ho.randomSelect();
-      this.bias_o.randomSelect();
-      this.bias_h.randomSelect();
-    }
+    //console.log(probability);
+    this.weights_ih.randomSelect(probability);
+    this.weights_ho.randomSelect(probability);
+    this.bias_o.randomSelect(probability);
+    this.bias_h.randomSelect(probability);
   }
 
-
-  dump(key)
-  {
-      window.localStorage.setItem(key, JSON.stringify(this));
+  dump(key) {
+    window.localStorage.setItem(key, JSON.stringify(this));
   }
 
-  get(key)
-  {
-      let loaded=window.localStorage.getItem(key);
-      loaded=JSON.parse(loaded);
-      this.weights_ih=loaded.weights_ih;
-      this.weights_ho=loaded.weights_ho;
-      this.bias_h=loaded.bias_h;
-      this.bias_o=loaded.bias_o;
+  get(key) {
+    let loaded = window.localStorage.getItem(key);
+    loaded = JSON.parse(loaded);
+    this.weights_ih = loaded.weights_ih;
+    this.weights_ho = loaded.weights_ho;
+    this.bias_h = loaded.bias_h;
+    this.bias_o = loaded.bias_o;
   }
 
   //normalize inputs

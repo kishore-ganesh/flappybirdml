@@ -2,7 +2,8 @@ var globalBestBird;
 var globalSecondBestBird;
 function setup() {
   createCanvas(800, 600);
-  slider1 = createSlider(-100, -1);
+  slider1 = createSlider(1, 100);
+ // speed=slider1.value();
   inputBox=createInput();
   saveButton=createButton("Save generation");
   loadButton=createButton("Load generation");
@@ -18,6 +19,7 @@ function setup() {
   gap = 150;
   wallgap=400;
   walllist = [];
+
 
   for (let i = 0; i < 10; i++) {
     addToWallList(wallgap * i);
@@ -58,6 +60,7 @@ function draw() {
   //check bias dimension
   noStroke();
   fill(255);
+
   // text(bird.score, 100, 100);
   //console.log(walllist[0].top.x);
   for (let i = 0; i < birds.length; i++) {
@@ -83,6 +86,7 @@ function draw() {
         birds[i].jumps++;
       }
 
+     // birds[i].scale(slider1.value());
       birds[i].update();
       birds[i].show();
     }
@@ -99,8 +103,10 @@ function draw() {
       walllist[i].top.height
     );
 
-    walllist[i].top.velocity = slider1.value();
-    walllist[i].bottom.velocity = slider1.value();
+    //walllist[i].top.velocity = slider1.value();
+    //walllist[i].bottom.velocity = slider1.value();
+   // walllist[i].top.scale(slider1.value());
+    //walllist[i].bottom.scale(slider1.value());
     walllist[i].top.update();
     walllist[i].bottom.update();
 
@@ -181,7 +187,7 @@ function draw() {
     for (let i = 0; i < length; i++) {
       createdBird = new Bird(closest.bottom.y - 150);
       createdBird.brain.inheritFrom(bestBird.brain, secondBestBird.brain);
-      createdBird.brain.mutate(1);
+      createdBird.brain.mutate(0.01);
       birds.push(createdBird);
     }
 
@@ -257,6 +263,14 @@ function Bird(y) {
       this.veloy = 0;
     }
   };
+
+  this.scale=function(speed){
+
+    this.gravity=0.7*speed;
+    this.lift=-15*speed;
+
+
+  }
 }
 
 // function keyPressed()
@@ -278,4 +292,9 @@ function Wall(x, y, width, height) {
   this.update = function() {
     this.x += this.velocity;
   };
+
+  this.scale=function(speed)
+  {
+    this.velocity=-1*speed;
+  }
 }

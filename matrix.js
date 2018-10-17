@@ -115,50 +115,44 @@ class Matrix {
     return result;
   }
 
-  static mergeMatrix(a, b)
-  {
-    let result=new Matrix(a.rows, b.cols);
-    for(let i=0; i<a.rows; i++)
-        {
-            for(let j=0; j<a.cols; j++)
-            {
-                // if(j<a.columns/2)
-                // {
-                //     result.data[i][j]=a.data[i][j];
-                // }
+  static mergeMatrix(a, b) {
+    let result = new Matrix(a.rows, b.cols);
+    for (let i = 0; i < a.rows; i++) {
+      for (let j = 0; j < a.cols; j++) {
+        // if (j < a.columns / 2) {
+        //   result.data[i][j] = a.data[i][j];
+        // } else {
+        //   result.data[i][j] = b.data[i][j];
+        // }
 
-                    result.data[i][j]=(a.data[i][j]+b.data[i][j])/2;
-                
-            }
-        }
-
-        //a.print();
-        //result.print();
-
-     return result;
-  }
-
-  randomSelect(){
-    // let i=Math.floor(random(0, this.rows));
-    // let j=Math.floor(random(0, this.cols));
-    //this.print();
-    
-    //console.log("SELECTING");
-    for(let i=0; i<this.rows; i++)
-    {
-      for(let j=0; j<this.cols; j++)
-      {
-        
-        let a=(Math.random()*0.8)-0.4;
-        
-        this.data[i][j]+=a;
+        result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
       }
     }
 
+    //a.print();
+    //result.print();
+
+    return result;
+  }
+
+  randomSelect(probability) {
+    // let i=Math.floor(random(0, this.rows));
+    // let j=Math.floor(random(0, this.cols));
+    //this.print();
+
+    //console.log("SELECTING");
+    let actual = random(0, 1);
+    if (actual <= probability) {
+      //console.log("A");
+      for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+          let a = Math.random() * 0.8 - 0.4;
+          this.data[i][j]+=a;
+        }
+      }
+    }
 
     //this.print();
-    
-
   }
 
   print() {
