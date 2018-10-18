@@ -116,7 +116,7 @@ class Matrix {
   }
 
   static mergeMatrix(a, b) {
-    let result = new Matrix(a.rows, b.cols);
+    let result = new Matrix(a.rows, a.cols);
     for (let i = 0; i < a.rows; i++) {
       for (let j = 0; j < a.cols; j++) {
         // if (j < a.columns / 2) {
@@ -128,6 +128,7 @@ class Matrix {
         // result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
       }
     }
+
 
     //a.print();
     //result.print();
@@ -143,16 +144,17 @@ class Matrix {
     //console.log("SELECTING");
     let actual = random(0, 1);
     if (actual <= probability) {
-      //console.log("A");
-      // console.log(this.data[0][0]);
+      
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.cols; j++) {
           let a = Math.random() * 0.8 - 0.4;
+          
           this.data[i][j]+=randomGaussian(0, 0.1);
+          
         }
       }
 
-      // console.log(this.data[0][0]);
+      
     }
 
     //this.print();
