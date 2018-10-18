@@ -22,7 +22,15 @@ function setup() {
   gap = 150;
   wallgap = 400;
   walllist = [];
+  generateWallList();
 
+  
+}
+
+function generateWallList(){
+
+
+  walllist=[];
   for (let i = 0; i < 10; i++) {
     addToWallList(wallgap * i);
   }
@@ -112,25 +120,30 @@ function nextGeneration() {
      //console.log(birds[birdIndex].time);
   }
 
-  //  bestBird = birds[birds.length - 1];
-  // secondBestBird = birds[birds.length - 2];
-  //   if (globalBestBird == undefined) {
-  //     globalBestBird = bestBird;
-  //     globalSecondBestBird = secondBestBird;
-  //   } else {
-  //     if (globalBestBird.time > bestBird.time) {
+  // globalBestBird=globalBestBird.time>birds[birds.length-1].time?globalBestBird:birds[birds.length-1];
+  // seconBestBird=secondBestBird.time>birds[birds.length-2].time?globalSecondBestBird:birds[birds.length-2];
+
+  let bestBird = birds[birds.length - 1];
+  let secondBestBird = birds[birds.length - 2];
+    if (globalBestBird == undefined) {
+      globalBestBird = bestBird;
+      globalSecondBestBird = secondBestBird;
+    } else {
+      if (globalBestBird.time > bestBird.time) {
   //       // bestBird = globalBestBird;
-  //     } else {
-  //       globalBestBird = bestBird;
-  //     }
+      } else {
+        globalBestBird = bestBird;
+      }
 
-  //     if (globalSecondBestBird.time > secondBestBird.time) {
+      if (globalSecondBestBird.time > secondBestBird.time) {
   //       //secondBestBird = globalSecondBestBird;
-  //     } else {
-  //       globalSecondBestBird = secondBestBird;
-  //     }
-  //   }
+      } else {
+        globalSecondBestBird = secondBestBird;
+      }
+    }
 
+
+    //also give next
   // birds = [];
 
   //console.log(birds);
@@ -147,9 +160,11 @@ function nextGeneration() {
   birds=newBirds;
   //birds.splice(0, noOfBirds);
   //console.log(birds.length);
-  for (let i = 0; i < walllist.length; i++) {
-    walllist[i].x += wallgap;
-  }
+  // for (let i = 0; i < walllist.length; i++) {
+  //   walllist[i].x += wallgap;
+  // }
+
+  generateWallList();
 }
 
 function checkAllCollided() {
@@ -174,7 +189,9 @@ function draw() {
   for (let noOfLoops = 0; noOfLoops < slider1.value(); noOfLoops++) {
     for (let i = 0; i < birds.length; i++) {
       if (!birds[i].hasCollided) {
-        closest = walllist[0].x > birds[i].x ? walllist[0] : walllist[1];
+        closest = walllist[0].x +50> birds[i].x-16 ? walllist[0] : walllist[1];
+        
+        
         // console.log(walllist[1].top.x+" "+walllist[2].top.x);
         //console.log(closest.top.x-birds[i].x);
         inputs = [
