@@ -124,8 +124,8 @@ class Matrix {
         // } else {
         //   result.data[i][j] = b.data[i][j];
         // }
-
-        result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
+        result.data[i][j]=a.data[i][j];
+        // result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
       }
     }
 
@@ -144,12 +144,15 @@ class Matrix {
     let actual = random(0, 1);
     if (actual <= probability) {
       //console.log("A");
+      // console.log(this.data[0][0]);
       for (let i = 0; i < this.rows; i++) {
         for (let j = 0; j < this.cols; j++) {
           let a = Math.random() * 0.8 - 0.4;
-          this.data[i][j]+=a;
+          this.data[i][j]+=randomGaussian(0, 0.1);
         }
       }
+
+      // console.log(this.data[0][0]);
     }
 
     //this.print();
@@ -159,3 +162,7 @@ class Matrix {
     console.table(this.data);
   }
 }
+
+
+//Improve crossover
+//Tournament selection
