@@ -62,6 +62,25 @@ function poolSelection(birds) {
   return birds[index];
 }
 
+function altPoolSelection(birds){
+  let index=floor(random(birds.length));
+  let no=random();
+  while(no>=birds[index].time)
+  {
+    no=random();
+  }
+
+  while(no<birds[index].time&&index>0)
+  {
+    index--;
+  }
+
+  // console.log(birds[index].time);
+
+  return birds[index+1];
+
+}
+
 function addToWallList(offset) {
   z = random() * (height - gap);
   bottomheight = height - z - gap;
@@ -115,6 +134,8 @@ function nextGeneration() {
   {
     sum+=birds[j].time;
   }
+
+  // sum=birds[birds.length-1].time;
   for (let birdIndex = 0; birdIndex < birds.length; birdIndex++) {
     birds[birdIndex].time /= sum;
      //console.log(birds[birdIndex].time);
@@ -150,8 +171,9 @@ function nextGeneration() {
   let newBirds=[];
   for (let i = 0; i < noOfBirds; i++) {
     createdBird = new Bird(closest.bottomy - 150);
-    let bestBird = poolSelection(birds);
-    let secondBestBird = poolSelection(birds);
+   let bestBird = poolSelection(birds);
+    let secondBestBird =poolSelection(birds);
+
     createdBird.brain.inheritFrom(bestBird.brain, secondBestBird.brain);
     createdBird.brain.mutate(0.1);
     newBirds.push(createdBird);
@@ -189,6 +211,7 @@ function draw() {
   for (let noOfLoops = 0; noOfLoops < slider1.value(); noOfLoops++) {
     for (let i = 0; i < birds.length; i++) {
       if (!birds[i].hasCollided) {
+        
         closest = walllist[0].x +50> birds[i].x-16 ? walllist[0] : walllist[1];
         
         

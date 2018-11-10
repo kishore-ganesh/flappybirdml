@@ -119,13 +119,13 @@ class Matrix {
     let result = new Matrix(a.rows, a.cols);
     for (let i = 0; i < a.rows; i++) {
       for (let j = 0; j < a.cols; j++) {
-        // if (j < a.columns / 2) {
-        //   result.data[i][j] = a.data[i][j];
-        // } else {
-        //   result.data[i][j] = b.data[i][j];
-        // }
-        result.data[i][j]=a.data[i][j];
-        // result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
+        if (j < a.cols / 2) {
+          result.data[i][j] = a.data[i][j];
+        } else {
+          result.data[i][j] = b.data[i][j];
+        }
+        //  result.data[i][j]=a.data[i][j];
+        //result.data[i][j] = (a.data[i][j] + b.data[i][j]) / 2;
       }
     }
 
